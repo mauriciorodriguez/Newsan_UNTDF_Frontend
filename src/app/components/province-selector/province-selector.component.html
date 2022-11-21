@@ -1,0 +1,4 @@
+<select class="form-select" [(ngModel)]="selectedProvince">
+    <option selected>Seleccione una provincia</option>
+    <option *ngFor="let province of provinces, let i = index" value={{i}}>{{ province }}</option>
+</select>

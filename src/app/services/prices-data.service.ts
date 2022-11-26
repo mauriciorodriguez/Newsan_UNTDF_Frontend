@@ -12,9 +12,9 @@ export class PricesDataService {
     private http: HttpClient
   ) { }
 
-  public GetPricesByProvince(provinceName: string): Observable<IPrice[]> {
+  public GetPricesByProvince(provinceCode: string): Observable<IPrice[]> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.get<IPrice[]>("https://sheets.googleapis.com/v4/spreadsheets/1l-jRdsiSxYl5GG6Yz49IPtoU5jS0V8fPUj7YD5euxWs/values/5%20" + provinceName + "?alt=json&key=AIzaSyCq2wEEKL9-6RmX-TkW23qJsrmnFHFf5tY", { headers: headers })
+    return this.http.get<IPrice[]>("https://sheets.googleapis.com/v4/spreadsheets/1l-jRdsiSxYl5GG6Yz49IPtoU5jS0V8fPUj7YD5euxWs/values/" + provinceCode + "?alt=json&key=AIzaSyCq2wEEKL9-6RmX-TkW23qJsrmnFHFf5tY", { headers: headers })
       .pipe(
         map((res: any) => {
           return res.values;

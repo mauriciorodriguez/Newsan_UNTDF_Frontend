@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PricesDataService } from 'src/app/services/prices-data.service';
 
 @Component({
@@ -8,45 +8,17 @@ import { PricesDataService } from 'src/app/services/prices-data.service';
 })
 export class ProvinceSelectorComponent implements OnInit {
 
-  provinces: string[] = [
-    "Provincia de Buenos Aires (excepto AMBA)",
-    "Chaco",
-    "Chubut",
-    "Catamarca",
-    "Área Metropolitana de Buenos Aires (AMBA)",
-    "Córdoba",
-    "Corrientes",
-    "Entre Ríos",
-    "Formosa",
-    "Jujuy",
-    "La Pampa",
-    "La Rioja",
-    "Mendoza",
-    "Misiones",
-    "Neuquén",
-    "Río Negro",
-    "Salta",
-    "San Juan",
-    "San Luis",
-    "Santa Cruz",
-    "Santa Fe",
-    "Santiago del Estero",
-    "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
-    "Tucumán"
-  ]
+  @Input() provincesAndCodes: { id: string, provinceCode: string }[] = []
 
-  selectedProvince: number = -1;
+  selectedProvinceCode: { id: string, provinceCode: string } = { id: "Catamarca", provinceCode: "" }
 
-  constructor(
-    private priceDataSerivce: PricesDataService,
-  ) { }
+  constructor() { }
 
-  ngOnInit(): void {
-    this.provinces = this.provinces.sort();
-    this.priceDataSerivce.GetPricesByProvince(this.provinces[2])
-      .subscribe(res => {
-        console.log(res);
-      });
+  ngOnInit(): void { }
+
+  onProvinceSelect(event: any) {
+    this.selectedProvinceCode = event.id;
+    console.log(this.selectedProvinceCode);
   }
 
 }

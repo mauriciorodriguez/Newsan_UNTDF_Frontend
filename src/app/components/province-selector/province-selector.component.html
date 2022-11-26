@@ -1,4 +1,14 @@
-<select class="form-select" [(ngModel)]="selectedProvince">
-    <option selected>Seleccione una provincia</option>
-    <option *ngFor="let province of provinces, let i = index" value={{i}}>{{ province }}</option>
-</select>
+<div class="border border-dark rounded rounded-3 p-3 m-3">
+    <form>
+        <div class="mb-3">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-3 col-lg-2" *ngFor="let province of provincesAndCodes">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id={{province.id}}
+                        (change)="onProvinceSelect($event.target)" [checked]="province.id == selectedProvinceCode.id">
+                    <label class="form-check-label text-break" for={{province.id}}> {{province.id}} </label>
+                </div>
+            </div>
+        </div>
+        <a class="btn btn-primary col-12">Siguiente</a>
+    </form>
+</div>

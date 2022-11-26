@@ -1,3 +1,4 @@
+import { provideCloudflareLoader } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
@@ -11,16 +12,40 @@ export class ProvincesDataService {
 
   constructor(private http: HttpClient) { }
 
-  getProvinces(): Observable<IProvince>[] {
-    return this.http.get<IProvinceApi[]>('./assets/provinces.json').pipe(
-      map((res: IProvinceApi[]) => {
-        const provinces: IProvince[] = [];
-        res.forEach(province => {
-          provinces.push({ ...province, name: province.nombre, url: province.api });
-        });
+  private baseUrl: string = "./assets/api"
+
+  getProvinces() {
+    return this.http.get(this.baseUrl + '/provincias.json').pipe(
+      map((res: any) => {
+        let provinces = res.map((prov: any) => {
+          let aux = {
+            ...prov,
+            url: prov.api,
+            name: prov.nombre,
+          }
+          delete aux.api;
+          delete aux.nombre;
+          return aux;
+        })
         return provinces;
       })
     );
+  }
+
+  getProvinceById(id: number) {
+    return this.http.get(this.baseUrl + '/provincias.json')
+      .pipe(
+        map((provinces: any) => {
+          let provinceResult = null;
+          for (let province of provinces) {
+            if (province.id == id) {
+              provinceResult = province;
+              break;
+            }
+          }
+          return provinceResult;
+        })
+      );
   }
 
 }

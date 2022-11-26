@@ -6,11 +6,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProvinceSelectorComponent } from './components/province-selector/province-selector.component';
 import { PricesDataService } from './services/prices-data.service';
+import { PriceListComponent } from './components/price-list/price-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProvinceSelectorComponent
+    ProvinceSelectorComponent,
+    PriceListComponent
   ],
   imports: [
     BrowserModule,

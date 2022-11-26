@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { PricesDataService } from 'src/app/services/prices-data.service';
+import { Component, OnInit } from '@angular/core';
+import { IProvince } from 'src/app/interfaces/IProvince';
+import { ProvincesDataService } from 'src/app/services/provinces-data.service';
 
 @Component({
   selector: 'app-province-selector',
@@ -8,17 +9,31 @@ import { PricesDataService } from 'src/app/services/prices-data.service';
 })
 export class ProvinceSelectorComponent implements OnInit {
 
-  @Input() provincesAndCodes: { id: string, provinceCode: string }[] = []
+  selectedProvinceId: number = 0;
 
-  selectedProvinceCode: { id: string, provinceCode: string } = { id: "Catamarca", provinceCode: "" }
+  provinces: IProvince[] = [];
 
-  constructor() { }
+  constructor(
+    private provinceDataService: ProvincesDataService,
+  ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.loadProvinces();
+  }
 
-  onProvinceSelect(event: any) {
-    this.selectedProvinceCode = event.id;
-    console.log(this.selectedProvinceCode);
+  loadProvinces() {
+    this.provinceDataService.getProvinces().subscribe(
+      (res: IProvince[]) => {
+        this.provinces = res;
+      }
+    )
+  }
+
+  onProvinceSelect(target: any) {
+    if (!target) return;
+    if (!target.id) return;
+
+    console.log(target.id);
   }
 
 }

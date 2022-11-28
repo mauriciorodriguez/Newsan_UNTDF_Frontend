@@ -33,7 +33,6 @@ export class ProvinceSelectorComponent implements OnInit {
     if (!target) return;
     if (!target.id) return;
 
-    console.log(target.id);
+    this.selectedProvinceId = target.id;
   }
-
 }

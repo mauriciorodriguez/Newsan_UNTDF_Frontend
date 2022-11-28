@@ -1,9 +1,7 @@
 import { provideCloudflareLoader } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import { IProvince } from '../interfaces/IProvince';
-import { IProvinceApi } from '../interfaces/IProvinceApi';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +10,13 @@ export class ProvincesDataService {
 
   constructor(private http: HttpClient) { }
 
-  private baseUrl: string = "./assets/api"
+  private baseUrl: string = "./assets/api/"
 
   getProvinces() {
-    return this.http.get(this.baseUrl + '/provincias.json').pipe(
+    return this.http.get(this.baseUrl + 'provincias.json').pipe(
       map((res: any) => {
         let provinces = res.map((prov: any) => {
-          let aux = {
-            ...prov,
-            url: prov.api,
-            name: prov.nombre,
-          }
-          delete aux.api;
-          delete aux.nombre;
+          let aux = this.provinceTransform(prov);
           return aux;
         })
         return provinces;
@@ -33,19 +25,28 @@ export class ProvincesDataService {
   }
 
   getProvinceById(id: number) {
-    return this.http.get(this.baseUrl + '/provincias.json')
+    return this.http.get(this.baseUrl + 'provincias.json')
       .pipe(
         map((provinces: any) => {
           let provinceResult = null;
           for (let province of provinces) {
             if (province.id == id) {
-              provinceResult = province;
+              provinceResult = this.provinceTransform(province);
               break;
             }
           }
           return provinceResult;
         })
       );
+  }
+
+  private provinceTransform(province: any) {
+    let provinceResult = province;
+    provinceResult.url = province.api;
+    provinceResult.name = province.nombre;
+    delete provinceResult.api;
+    delete provinceResult.nombre;
+    return provinceResult;
   }
 
 }

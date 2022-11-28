@@ -5,21 +5,25 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProvinceSelectorComponent } from './components/province-selector/province-selector.component';
-import { PricesDataService } from './services/prices-data.service';
-import { PriceListComponent } from './components/price-list/price-list.component';
+import { ProductDataService } from './services/product-data.service';
+import { NgxBarcode6Module } from 'ngx-barcode6';
+import { ProductListComponent } from './components/product-list/product-list.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProvinceSelectorComponent,
-    PriceListComponent
+    ProductListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    NgxBarcode6Module,
+    FormsModule,
   ],
-  providers: [PricesDataService],
+  providers: [ProductDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
